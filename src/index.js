@@ -1,24 +1,23 @@
 import blobStream from "blob-stream";
+import Vue from "vue";
 
 import PDFDocument from "./pdfkit.standalone.js";
+import { mount } from "./mount.js";
+import App from "./components/app.js";
 
 function setup() {
   const iframe = document.querySelector('iframe');
+  const editor = document.querySelector('.editor');
 
-  const doc = new PDFDocument();
-  const stream = doc.pipe(blobStream());
+  mount(editor, iframe);
 
-  doc.text('Here we go again!');
-  doc.addPage();
-
-  doc.text('Some other text', 500, 500);
-  doc.end();
-  stream.on('finish', function() {
-    const blob = stream.toBlob('application/pdf');
-    const url = stream.toBlobURL('application/pdf');
-    iframe.src = url;
-    console.log(url);
-  })
+  new Vue({
+    el: editor,
+    components: {
+      App
+    },
+    template: `<App />`
+  });
 }
 
 window.onload = () => setup();
