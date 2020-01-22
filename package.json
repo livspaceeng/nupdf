@@ -1,0 +1,21 @@
+{
+  "name": "nupdf",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "preinstall": "./downloadpdfkit",
+    "build": "webpack --config webpack.config.js --watch --progress",
+    "dev": "node server.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "blob-stream": "^0.1.3",
+    "http-server": "^0.12.1",
+    "webpack": "^4.41.5"
+  },
+  "devDependencies": {
+    "webpack-cli": "^3.3.10"
+  }
+}
