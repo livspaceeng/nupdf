@@ -1,24 +1,16 @@
-import Text from "./app.js";
+import TextBlock from "./textblock.js";
+
 export default {
+  components: {
+    TextBlock
+  },
   props: {
-    contents: {}
-  },
-  data() {
-    return {
-      elements: {
-        "text": Text
-      }
-    }
-  },
-  mounted() {
+    page: {}
   },
   template: `
     <div class="page">
-      <span v-for="element in page">
-        <component :is="elements[element.type]"
-          :content="element.children"
-        >
-        </component>
+      <span v-for="element in page.children">
+        <TextBlock v-if="element.type === 'text'" :content="element" />
       </span>
     </div>
   `

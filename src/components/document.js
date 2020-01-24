@@ -1,6 +1,11 @@
+import Page from "./page.js";
+
 export default {
+  components: {
+    Page
+  },
   props: {
-    doctree: {}
+    pages: {}
   },
   data() {
     return {}
@@ -9,8 +14,11 @@ export default {
   },
   template: `
     <div class="pages">
-      <Page class="page" v-for="page in doctree.children"
-        :contents="page"
+      <Page
+        class="page"
+        v-for="(page, i) in pages"
+        :key="i"
+        :page="page"
       >
       </Page>
     </div>
