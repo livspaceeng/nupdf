@@ -1,16 +1,18 @@
 export default {
+  props: {
+    doctree: {}
+  },
   data() {
-    return {
-      rows: []
-    }
+    return {}
   },
   mounted() {
-    this.rows = new Array(50).fill(0).map((item, i) => i);
   },
   template: `
     <div class="pages">
-      <div class="page">
-      </div>
+      <Page class="page" v-for="page in doctree.children"
+        :contents="page"
+      >
+      </Page>
     </div>
   `
 }

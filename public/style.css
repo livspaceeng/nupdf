@@ -36,3 +36,8 @@ body {
   height: 896px;
   background: white;
 }
+
+iframe {
+  width: 100%;
+  height: 100vh;
+}
