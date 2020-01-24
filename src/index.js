@@ -51,7 +51,12 @@ const documentJSON = {
         {
           type: 'text',
           attributes: {
-            value: 'Here we go again!'
+            value: 'Here we go again!',
+            x: 100,
+            y: 100,
+            options: {
+              width: 300
+            }
           }
         },
         {
@@ -59,7 +64,10 @@ const documentJSON = {
           attributes: {
             value: 'o',
             x: 605,
-            y: 782
+            y: 782,
+            options: {
+              width: 100
+            }
           }
         }
       ]
