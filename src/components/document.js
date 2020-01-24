@@ -14,13 +14,15 @@ export default {
   },
   template: `
     <div class="pages">
-      <Page
-        class="page"
-        v-for="(page, i) in pages"
-        :key="i"
-        :page="page"
-      >
-      </Page>
+      <div>
+        <Page
+          class="page"
+          v-for="(page, i) in pages"
+          :key="i"
+          :page="page"
+        >
+        </Page>
+      </div>
     </div>
   `
 }

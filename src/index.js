@@ -6,6 +6,8 @@ import App from "./components/app.js";
 
 const documentJSON = {
   type: 'root',
+  pageHeight: 791,
+  pageWidth: 611,
   children: [
     {
       type: 'page',
@@ -37,7 +39,7 @@ const documentJSON = {
           attributes: {
             x: 0,
             y: 0,
-            width: 300,
+            width: 200,
             height: 100
           }
         }

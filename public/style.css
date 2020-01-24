@@ -29,11 +29,15 @@ body {
   padding: 11px 5px;
   box-sizing: border-box;
   overflow: scroll;
+  display: flex;
+  justify-content: center;
 }
 
 .page {
-  width: 100%;
-  height: 896px;
+  width: 611px;
+  height: 791px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   background: white;
 }
 
