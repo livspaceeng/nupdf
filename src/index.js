@@ -27,6 +27,17 @@ function setup() {
             }
           },
           {
+            type: 'image',
+            attributes: {
+              url: '/img1.png',
+              x: 0,
+              y: 0,
+              options: {
+                width: 300
+              }
+            }
+          },
+          {
             type: 'rect',
             attributes: {
               x: 0,
