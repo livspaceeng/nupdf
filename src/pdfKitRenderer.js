@@ -9,7 +9,7 @@ export function doc(root, domNode) {
   }
 }
 
-export function render(pdfdoc) {
+export async function render(pdfdoc) {
   const iframe = document.createElement("iframe");
   pdfdoc.el.appendChild(iframe);
 
@@ -23,8 +23,9 @@ export function render(pdfdoc) {
     iframe.src = url;
   });
 
-  paint(pdfdoc.root, doc)
-  .then(() => doc.end())
+  await paint(pdfdoc.root, doc)
+  // .then(() => doc.end())
+  doc.end();
 }
 
 function blobToDataURL(blob) {
@@ -35,58 +36,53 @@ function blobToDataURL(blob) {
   })
 }
 
-function paint(node, doc) {
-  return new Promise((resolve, reject) => {
-    let elementRenderPromise;
+async function paint(root, doc) {
+  let pagesPainted = 0;
+
+  for (const page of root.children) {
+    await paintPage(page, doc);
+
+    if (++pagesPainted !== root.children.length) {
+      doc.addPage();
+    }
+  }
+  return doc;
+}
+
+
+async function paintPage(page, doc) {
+  for (const node of page.children) {
     switch (node.type) {
-      case 'root':
-        elementRenderPromise = Promise.resolve();
-        break;
-      case 'page': {
-        doc.addPage();
-        elementRenderPromise = Promise.resolve();
-        break;
-      }
       case 'text': {
         const {value, x, y, options} = node.attributes;
         doc.text(value, x, y, options);
-        elementRenderPromise = Promise.resolve();
+        // elementRenderPromise = Promise.resolve();
         break;
       }
       case 'image': {
         const {url, x, y, options} = node.attributes;
-        elementRenderPromise = fetch(url)
-        .then(response => response.blob())
-        .then(blob => blobToDataURL(blob))
-        .then(dataUrl => {
-          doc.image(dataUrl, x, y, options)
-        });
+        // elementRenderPromise = fetch(url)
+        // .then(response => response.blob())
+        // .then(blob => blobToDataURL(blob))
+        // .then(dataUrl => {
+        //   doc.image(dataUrl, x, y, options)
+        // });
+        const response = await fetch(url);
+        const blob = await response.blob();
+        const dataUrl = await blobToDataURL(blob);
+        doc.image(dataUrl, x, y, options);
         break;
       }
       case 'rect': {
         const {x, y, width, height} = node.attributes;
         doc.rect(x, y, width, height);
         doc.stroke();
-        elementRenderPromise = Promise.resolve();
+        // elementRenderPromise = Promise.resolve();
         break;
       }
       default:
         throw new Error('Unknown node type in tree!');
     }
-
-    let childrenRenderPromises = []
-
-    if (node.children) {
-      childrenRenderPromises = node.children.map((child, index) => {
-        if (node.type === 'root' && child.type === 'page' && index === 0) {
-          return child.children.map(grandchild => paint(grandchild, doc));
-        } else {
-          return paint(child, doc);
-        }
-      });
-      childrenRenderPromises = childrenRenderPromises.flat(Infinity);
-    }
-    childrenRenderPromises.push(elementRenderPromise);
-    return Promise.all(childrenRenderPromises).then(() => resolve());
-  })
+  }
+  return doc;
 }
