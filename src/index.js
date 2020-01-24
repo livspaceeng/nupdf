@@ -19,7 +19,9 @@ function setup() {
             type: 'text',
             children: [],
             attributes: {
-              value: 'Here we go again!'
+              value: 'Some text',
+              x: 400,
+              y: 400
             }
           }
         ]
@@ -31,9 +33,16 @@ function setup() {
             type: 'text',
             children: [],
             attributes: {
-              value: 'Here we go again!',
-              x: 400,
-              y: 400
+              value: 'Here we go again!'
+            }
+          },
+          {
+            type: 'text',
+            children: [],
+            attributes: {
+              value: 'o',
+              x: 605,
+              y: 782
             }
           }
         ]
