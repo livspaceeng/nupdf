@@ -3,8 +3,8 @@ export default {
     content: {}
   },
   template: `
-    <img :style="{
-        border: 'solid 1px',
+    <img class="hoverborder"
+      :style="{
         position: 'absolute',
         left: content.attributes.x,
         top: content.attributes.y,

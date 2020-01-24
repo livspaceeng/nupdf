@@ -2,6 +2,15 @@ body {
   margin: 0px;
 }
 
+.hoverborder {
+  border: solid 1px transparent;
+}
+
+.hoverborder:hover {
+  border: solid 1px;
+  cursor: pointer;
+}
+
 .container {
   display: flex;
   flex-direction: row;
