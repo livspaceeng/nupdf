@@ -9,18 +9,52 @@ function setup() {
   const iframe = document.querySelector('.render');
   const editor = document.querySelector('.editor');
 
-  const tree = {};
+  const tree = {
+    type: 'root',
+    children: [
+      {
+        type: 'page',
+        children: [
+          {
+            type: 'text',
+            children: [],
+            attributes: {
+              value: 'Here we go again!'
+            }
+          }
+        ]
+      },
+      {
+        type: 'page',
+        children: [
+          {
+            type: 'text',
+            children: [],
+            attributes: {
+              value: 'Here we go again!',
+              x: 400,
+              y: 400
+            }
+          }
+        ]
+      },
+      {
+        type: 'page',
+        children: []
+      }
+    ]
+  };
 
   mount(tree, editor, iframe);
 }
 
 function mount(root, editorNode, pdfNode) {
-  new Vue({
-    el: editorNode,
-    components: { App },
-    template: `<App />`,
-    data: root
-  });
+  // new Vue({
+  //   el: editorNode,
+  //   components: { App },
+  //   template: `<App />`,
+  //   data: root
+  // });
 
   const pdfdoc = doc(root, pdfNode);
   render(pdfdoc);

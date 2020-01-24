@@ -1,6 +1,6 @@
 import blobStream from "blob-stream";
 
-import PDFDocument from "./pdfkit.standalone.js";
+import PDFDocument from "pdfkit";
 
 export function doc(root, domNode) {
   return {
@@ -16,19 +16,41 @@ export function render(pdfdoc) {
   const doc = new PDFDocument();
   const stream = doc.pipe(blobStream());
 
-  doc.text('Here we go again!');
+  paint(pdfdoc.root, doc);
 
-  doc.addPage();
-
-  doc.text('Some other text', 500, 500);
   doc.end();
 
   stream.on('finish', function() {
-    // get a blob you can do whatever you like with
     const blob = stream.toBlob('application/pdf');
 
-    // or get a blob URL for display in the browser
     const url = stream.toBlobURL('application/pdf');
     iframe.src = url;
+  });
+}
+
+function paint(node, doc) {
+  debugger
+  switch (node.type) {
+    case 'root':
+      break;
+    case 'page': {
+      doc.addPage();
+      break;
+    }
+    case 'text': {
+      const {value, x, y} = node.attributes;
+      doc.text(value, x, y);
+      break;
+    }
+    default:
+      throw new Error('Unknown node type in tree!');
+  }
+
+  node.children.map((child, index) => {
+    if (node.type === 'root' && child.type === 'page' && index === 0) {
+      child.children.map(grandchild => paint(grandchild, doc));
+    } else {
+      paint(child, doc);
+    }
   });
 }
