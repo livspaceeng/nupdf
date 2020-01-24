@@ -17,11 +17,22 @@ function setup() {
         children: [
           {
             type: 'text',
-            children: [],
             attributes: {
-              value: 'Some text',
-              x: 400,
-              y: 400
+              value: 'fkdsalf fdkfas fdsklfsla fksfksiraruewrbe jf nas fklada fds fa fkalfa flsf',
+              x: 0,
+              y: 0,
+              options: {
+                width: 300
+              }
+            }
+          },
+          {
+            type: 'rect',
+            attributes: {
+              x: 0,
+              y: 0,
+              width: 300,
+              height: 100
             }
           }
         ]
@@ -31,14 +42,12 @@ function setup() {
         children: [
           {
             type: 'text',
-            children: [],
             attributes: {
               value: 'Here we go again!'
             }
           },
           {
             type: 'text',
-            children: [],
             attributes: {
               value: 'o',
               x: 605,

@@ -29,7 +29,6 @@ export function render(pdfdoc) {
 }
 
 function paint(node, doc) {
-  debugger
   switch (node.type) {
     case 'root':
       break;
@@ -38,19 +37,27 @@ function paint(node, doc) {
       break;
     }
     case 'text': {
-      const {value, x, y} = node.attributes;
-      doc.text(value, x, y);
+      const {value, x, y, options} = node.attributes;
+      doc.text(value, x, y, options);
+      break;
+    }
+    case 'rect': {
+      const {x, y, width, height} = node.attributes;
+      doc.rect(x, y, width, height);
+      doc.stroke();
       break;
     }
     default:
       throw new Error('Unknown node type in tree!');
   }
 
-  node.children.map((child, index) => {
-    if (node.type === 'root' && child.type === 'page' && index === 0) {
-      child.children.map(grandchild => paint(grandchild, doc));
-    } else {
-      paint(child, doc);
-    }
-  });
+  if (node.children) {
+    node.children.map((child, index) => {
+      if (node.type === 'root' && child.type === 'page' && index === 0) {
+        child.children.map(grandchild => paint(grandchild, doc));
+      } else {
+        paint(child, doc);
+      }
+    });
+  }
 }
