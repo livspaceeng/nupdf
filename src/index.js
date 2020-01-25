@@ -22,7 +22,7 @@ const documentJSON = {
         {
           type: 'text',
           attributes: {
-            value: 'fkdsalf fdkfas fdsklfsla fksfksiraruewrbe jf nas fklada fds fa fkalfa flsf',
+            value: 'Here is some text with a line break and a tab',
             x: 0,
             y: 0,
             options: {

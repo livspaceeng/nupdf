@@ -62,6 +62,32 @@ body {
   font-family: Helvetica;
 }
 
+.textblock .cursor {
+  border: solid 1px;
+  margin-left: 1px;
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0% {
+    opacity: 0;
+  }
+  1% {
+    opacity: 1;
+  }
+
+  49% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0;
+  }
+
+  99% {
+    opacity: 0;
+  }
+}
+
 .toolbar {
   height: 50px;
   background: #353535;

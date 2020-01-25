@@ -11,16 +11,11 @@ export default {
         top: content.attributes.y,
         width: content.attributes.options.width
       }"
+      tabindex="0"
     >
       {{ content.attributes.value }}
-      <span class="handle handle-top"
-        v-if="hovered"
-        @mousedown="startTopResize"
-      >
-      </span>
-      <span class="handle handle-bottom"
-        v-if="hovered"
-        @mousedown="startBottomResize"
+      <span v-if="content.attributes.editing"
+        class="cursor"
       >
       </span>
       <span class="handle handle-left"
@@ -44,27 +39,7 @@ export default {
   methods: {
     mousedown(event) {
       this.$emit('pointerdown', {
-        type: 'imagetap',
-        x: event.x,
-        y: event.y,
-        docnode: this.content
-      });
-    },
-
-    startTopResize(event) {
-      event.stopPropagation();
-      this.$emit('pointerdown', {
-        type: 'imageresize-top',
-        x: event.x,
-        y: event.y,
-        docnode: this.content
-      });
-    },
-
-    startBottomResize(event) {
-      event.stopPropagation();
-      this.$emit('pointerdown', {
-        type: 'imageresize-bottom',
+        type: 'texttap',
         x: event.x,
         y: event.y,
         docnode: this.content
