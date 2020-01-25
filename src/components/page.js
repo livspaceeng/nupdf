@@ -12,6 +12,7 @@ export default {
         <TextBlock
           v-if="element.type === 'text'"
           :content="element"
+          @pointerdown="handledown"
         />
 
         <ImageRenderer
@@ -72,7 +73,7 @@ export default {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width - dy;
         } else if (this.startEvent === 'imageresize-bottom') {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dy;
-        }
+        } 
       }
     }
   }

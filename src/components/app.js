@@ -23,20 +23,37 @@ export default {
   methods: {
     update({type, data}) {
       const page = tree.children[0];
-      const imageElement = {
-        type: 'image',
-        attributes: {
-          file: data,
-          x: 300,
-          y: 300,
-          options: {
-            width: 300
+      if (type === 'image') {
+        const imageElement = {
+          type: 'image',
+          attributes: {
+            file: data,
+            x: 300,
+            y: 300,
+            options: {
+              width: 300
+            }
           }
-        }
-      };
-      const newchildren = page.children.concat(imageElement);
-      this.$set(page, 'children', newchildren);
-      this.$root.$emit('change');
+        };
+        const newchildren = page.children.concat(imageElement);
+        this.$set(page, 'children', newchildren);
+        this.$root.$emit('change');
+      } else if (type === 'text') {
+        const textElement = {
+          type: 'text',
+          attributes: {
+            value: 'Some text here some other text happens here and then some more',
+            x: 300,
+            y: 300,
+            options: {
+              width: 300
+            }
+          }
+        };
+        const newchildren = page.children.concat(textElement);
+        this.$set(page, 'children', newchildren);
+        this.$root.$emit('change');
+      }
     }
   }
 }

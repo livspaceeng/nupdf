@@ -99,7 +99,7 @@ function mount(root, editorNode, pdfNode) {
 
   const pdfdoc = doc(root, pdfNode);
 
-  render(pdfdoc);
+  setTimeout(() => render(pdfdoc));
 
   const editor = new Vue({
     el: editorNode,

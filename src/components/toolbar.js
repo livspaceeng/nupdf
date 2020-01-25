@@ -15,6 +15,10 @@ export default {
         @click="build"
       >
       </span>
+      <span class="fa fa-paragraph"
+        @click="addText"
+      >
+      </span>
       <span class="fa fa-plus"></span>
     </div>`,
   methods: {
@@ -27,6 +31,9 @@ export default {
         console.log('Adding file: ', file);
         this.$emit('change', { type: 'image', data: file });
       }
+    },
+    addText() {
+      this.$emit('change', { type: 'text' });
     },
     build() {
       this.$root.$emit('change');
