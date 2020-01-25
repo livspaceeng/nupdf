@@ -49,19 +49,23 @@ export default {
     }
   },
   template: `
-    <img class="hoverborder"
-      @mousedown="mousedown"
-      @mouseup="mouseup"
-      @mousemove="move"
-      draggable="false"
+    <span class="hoverborder"
       :style="{
         position: 'absolute',
         left: content.attributes.x,
         top: content.attributes.y,
-        width: content.attributes.options.width
       }"
-      :src="imageurl"
     >
-    </img>
+      <img @mousedown="mousedown"
+        @mouseup="mouseup"
+        @mousemove="move"
+        draggable="false"
+        :style="{
+          width: content.attributes.options.width
+        }"
+        :src="imageurl"
+      >
+      </img>
+    </span>
   `
 }
