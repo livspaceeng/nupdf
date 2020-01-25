@@ -10,8 +10,6 @@ export default {
       @mouseleave="setHovered(false)"
     >
       <img @mousedown="mousedown"
-        @mouseup="mouseup"
-        @mousemove="move"
         draggable="false"
         :style="{
           width: content.attributes.options.width
@@ -19,32 +17,25 @@ export default {
         :src="imageurl"
       >
       </img>
+
       <span class="handle handle-top"
         v-if="hovered"
         @mousedown="startTopResize"
-        @mouseup="endTopResize"
-        @mousemove="doTopResize"
       >
       </span>
       <span class="handle handle-bottom"
         v-if="hovered"
         @mousedown="startBottomResize"
-        @mouseup="endBottomResize"
-        @mousemove="doBottomResize"
       >
       </span>
       <span class="handle handle-left"
         v-if="hovered"
         @mousedown="startLeftResize"
-        @mouseup="endLeftResize"
-        @mousemove="doLeftResize"
       >
       </span>
       <span class="handle handle-right"
         v-if="hovered"
         @mousedown="startRightResize"
-        @mouseup="mouseup"
-        @mousemove="doRightResize"
       >
       </span>
     </span>
@@ -62,53 +53,16 @@ export default {
     }
   },
   data: () => ({
-    mouseisdown: false,
-    down: { x: 0, y: 0 },
-    up: { x: 0, y: 0 },
-    start: { x: 0, y: 0 },
-    tophandle: {
-      down: { x: 0, y: 0 },
-      up: { x: 0, y: 0 },
-      start: { x: 0, y: 0 }
-    },
-    bottomhandle: {
-      down: { x: 0, y: 0 },
-      up: { x: 0, y: 0 },
-      start: { x: 0, y: 0 }
-    },
-    lefthandle: {
-      down: { x: 0, y: 0 },
-      up: { x: 0, y: 0 },
-      start: { x: 0, y: 0 }
-    },
-    righthandle: {
-      down: { x: 0, y: 0 },
-      up: { x: 0, y: 0 },
-      start: { x: 0, y: 0 }
-    },
     hovered: false
   }),
   methods: {
     mousedown(event) {
-      this.$emit('pointerdown', { type: 'imagetap', x: event.x, y: event.y, docnode: this.content })
-      // this.down = {x: event.x, y: event.y};
-      // this.mouseisdown = true;
-      // this.start.x = this.content.attributes.x;
-      // this.start.y = this.content.attributes.y;
-    },
-    mouseup(event) {
-      // this.mouseisdown = false;
-      // this.$root.$emit('change');
-    },
-    move() {
-      // if (this.mouseisdown) {
-      //   this.up = {x: event.x, y: event.y};
-      //   const dx = this.up.x - this.down.x;
-      //   const dy = this.up.y - this.down.y;
-      //   this.content.attributes.x = this.start.x + dx;
-      //   this.content.attributes.y = this.start.y + dy;
-      //   // console.log(dx, dy);
-      // }
+      this.$emit('pointerdown', {
+        type: 'imagetap',
+        x: event.x,
+        y: event.y,
+        docnode: this.content
+      });
     },
 
     doRightResize(event) {
@@ -119,22 +73,40 @@ export default {
       }
     },
 
-    startTopResize(event) {},
-    endTopResize(event) {},
-    doTopResize(event) {},
+    startTopResize(event) {
+      this.$emit('pointerdown', {
+        type: 'imageresize-top',
+        x: event.x,
+        y: event.y,
+        docnode: this.content
+      });
+    },
 
-    startBottomResize(event) {},
-    endBottomResize(event) {},
-    doBottomResize(event) {},
+    startBottomResize(event) {
+      this.$emit('pointerdown', {
+        type: 'imageresize-bottom',
+        x: event.x,
+        y: event.y,
+        docnode: this.content
+      });
+    },
 
-    startLeftResize(event) {},
-    endLeftResize(event) {},
-    doLeftResize(event) {},
+    startLeftResize(event) {
+      this.$emit('pointerdown', {
+        type: 'imageresize-left',
+        x: event.x,
+        y: event.y,
+        docnode: this.content
+      });
+    },
 
     startRightResize(event) {
-      this.righthandle.down = { x: event.x, y: event.y };
-      this.righthandle.start.x = this.content.attributes.options.width;
-      this.mouseisdown = true;
+      this.$emit('pointerdown', {
+        type: 'imageresize-right',
+        x: event.x,
+        y: event.y,
+        docnode: this.content
+      });
     },
 
     setHovered(value) {

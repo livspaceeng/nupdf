@@ -41,7 +41,7 @@ export default {
       mouseDownAt: { x: 0, y: 0 },
       startEvent: '',
       docNode: null,
-      nodeStartLocation: {x: 0, y: 0}
+      nodeStartAttributes: {x: 0, y: 0}
     };
   },
   methods: {
@@ -50,22 +50,28 @@ export default {
       this.mouseDownAt = { x: event.x, y: event.y };
       this.startEvent = event.type;
       this.docnode = event.docnode;
-      this.nodeStartLocation = {
-        x: event.docnode.attributes.x,
-        y: event.docnode.attributes.y
-      };
+      this.nodeStartAttributes = JSON.parse(JSON.stringify(event.docnode.attributes));
     },
     handleup(event) {
       this.mouseIsDown = false;
-      this.$root.$emit('change');
+      // this.$root.$emit('change');
     },
     handlemove(event) {
       if (this.mouseIsDown) {
+        const dx = event.x - this.mouseDownAt.x;
+        const dy = event.y - this.mouseDownAt.y;
+
         if (this.startEvent === 'imagetap') {
-          const dx = event.x - this.mouseDownAt.x;
-          const dy = event.y - this.mouseDownAt.y;
-          this.docnode.attributes.x = this.nodeStartLocation.x + dx;
-          this.docnode.attributes.y = this.nodeStartLocation.y + dy;
+          this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
+          this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
+        } else if (this.startEvent === 'imageresize-right') {
+          this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dx;
+        } else if (this.startEvent === 'imageresize-left') {
+          this.docnode.attributes.options.width = this.nodeStartAttributes.options.width - dx;
+        } else if (this.startEvent === 'imageresize-top') {
+          this.docnode.attributes.options.width = this.nodeStartAttributes.options.width - dy;
+        } else if (this.startEvent === 'imageresize-bottom') {
+          this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dy;
         }
       }
     }
