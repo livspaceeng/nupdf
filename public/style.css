@@ -2,6 +2,38 @@ body {
   margin: 0px;
 }
 
+.handle {
+  border: solid 1px;
+  width: 10px;
+  height: 10px;
+  position: absolute;
+  background: gray;
+}
+
+.handle-top {
+  top: -5px;
+  left: 50%;
+  cursor: ns-resize;
+}
+
+.handle-right {
+  top: calc(50% - 5px);
+  left: calc(100% - 5px);
+  cursor: ew-resize;
+}
+
+.handle-left {
+  top: calc(50% - 5px);
+  left: -5px;
+  cursor: ew-resize;
+}
+
+.handle-bottom {
+  top: calc(100% - 5px);
+  left: calc(50% - 5px);
+  cursor: ns-resize;
+}
+
 .hoverborder {
   border: solid 1px transparent;
 }

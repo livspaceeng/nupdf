@@ -13,18 +13,30 @@ export default {
   },
   data: () => ({
     mouseisdown: false,
-    down: {
-      x: 0,
-      y: 0
+    down: { x: 0, y: 0 },
+    up: { x: 0, y: 0 },
+    start: { x: 0, y: 0 },
+    tophandle: {
+      down: { x: 0, y: 0 },
+      up: { x: 0, y: 0 },
+      start: { x: 0, y: 0 }
     },
-    up: {
-      x: 0,
-      y: 0
+    bottomhandle: {
+      down: { x: 0, y: 0 },
+      up: { x: 0, y: 0 },
+      start: { x: 0, y: 0 }
     },
-    start: {
-      x: 0,
-      y: 0
-    }
+    lefthandle: {
+      down: { x: 0, y: 0 },
+      up: { x: 0, y: 0 },
+      start: { x: 0, y: 0 }
+    },
+    righthandle: {
+      down: { x: 0, y: 0 },
+      up: { x: 0, y: 0 },
+      start: { x: 0, y: 0 }
+    },
+    hovered: false
   }),
   methods: {
     mousedown(event) {
@@ -46,6 +58,38 @@ export default {
         this.content.attributes.y = this.start.y + dy;
         // console.log(dx, dy);
       }
+    },
+    startTopResize(event) {},
+    endTopResize(event) {},
+    doTopResize(event) {},
+
+    startBottomResize(event) {},
+    endBottomResize(event) {},
+    doBottomResize(event) {},
+
+    startLeftResize(event) {},
+    endLeftResize(event) {},
+    doLeftResize(event) {},
+
+    startRightResize(event) {
+      this.righthandle.down = { x: event.x, y: event.y };
+      this.righthandle.start.x = this.content.attributes.options.width;
+      this.mouseisdown = true;
+    },
+    endRightResize(event) {
+      this.mouseisdown = false;
+      this.$root.$emit('change');
+    },
+    doRightResize(event) {
+      if (this.mouseisdown) {
+        this.righthandle.up = {x: event.x, y: event.y};
+        const dx = event.x - this.righthandle.down.x;
+        this.content.attributes.options.width = this.righthandle.start.x + dx;
+      }
+    },
+
+    setHovered(value) {
+      this.hovered = value;
     }
   },
   template: `
@@ -55,6 +99,8 @@ export default {
         left: content.attributes.x,
         top: content.attributes.y,
       }"
+      @mouseenter="setHovered(true)"
+      @mouseleave="setHovered(false)"
     >
       <img @mousedown="mousedown"
         @mouseup="mouseup"
@@ -66,6 +112,34 @@ export default {
         :src="imageurl"
       >
       </img>
+      <span class="handle handle-top"
+        v-if="hovered"
+        @mousedown="startTopResize"
+        @mouseup="endTopResize"
+        @mousemove="doTopResize"
+      >
+      </span>
+      <span class="handle handle-bottom"
+        v-if="hovered"
+        @mousedown="startBottomResize"
+        @mouseup="endBottomResize"
+        @mousemove="doBottomResize"
+      >
+      </span>
+      <span class="handle handle-left"
+        v-if="hovered"
+        @mousedown="startLeftResize"
+        @mouseup="endLeftResize"
+        @mousemove="doLeftResize"
+      >
+      </span>
+      <span class="handle handle-right"
+        v-if="hovered"
+        @mousedown="startRightResize"
+        @mouseup="endRightResize"
+        @mousemove="doRightResize"
+      >
+      </span>
     </span>
   `
 }
