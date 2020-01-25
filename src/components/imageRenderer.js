@@ -2,6 +2,15 @@ export default {
   props: {
     content: {}
   },
+  computed: {
+    imageurl() {
+      if (this.content.attributes.url) {
+        return this.content.attributes.url;
+      } else if (this.content.attributes.file) {
+        return URL.createObjectURL(this.content.attributes.file)
+      }
+    }
+  },
   data: () => ({
     mouseisdown: false,
     down: {
@@ -51,7 +60,7 @@ export default {
         top: content.attributes.y,
         width: content.attributes.options.width
       }"
-      :src="content.attributes.url"
+      :src="imageurl"
     >
     </img>
   `

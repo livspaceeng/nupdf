@@ -23,7 +23,7 @@ export default {
   methods: {
     update({type, data}) {
       const page = tree.children[0];
-      page.children.push({
+      const imageElement = {
         type: 'image',
         attributes: {
           file: data,
@@ -33,7 +33,9 @@ export default {
             width: 300
           }
         }
-      });
+      };
+      const newchildren = page.children.concat(imageElement);
+      this.$set(page, 'children', newchildren);
       this.$root.$emit('change');
     }
   }
