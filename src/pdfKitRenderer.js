@@ -38,7 +38,7 @@ export async function render(pdfdoc) {
     iframe.onload = () => {
       spinner.style.display = 'none';
     }
-  
+
   });
 
   await paint(pdfdoc.root, doc)
@@ -78,17 +78,24 @@ async function paintPage(page, doc) {
         break;
       }
       case 'image': {
-        const {url, x, y, options} = node.attributes;
+        const {url, file, x, y, options} = node.attributes;
         // elementRenderPromise = fetch(url)
         // .then(response => response.blob())
         // .then(blob => blobToDataURL(blob))
         // .then(dataUrl => {
         //   doc.image(dataUrl, x, y, options)
         // });
-        const response = await fetch(url);
-        const blob = await response.blob();
-        const dataUrl = await blobToDataURL(blob);
-        doc.image(dataUrl, x, y, options);
+        if (url) {
+          const response = await fetch(url);
+          const blob = await response.blob();
+          const dataUrl = await blobToDataURL(blob);
+          doc.image(dataUrl, x, y, options);
+        } else if (file) {
+          const dataUrl = await blobToDataURL(file);
+          doc.image(dataUrl, x, y, options);
+        } else {
+          throw new Error('Unknown image node');
+        }
         break;
       }
       case 'rect': {

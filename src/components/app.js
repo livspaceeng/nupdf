@@ -15,9 +15,26 @@ export default {
   template: `
     <EditorBackground>
       <template v-slot:toolbar>
-        <ToolBar/>
+        <ToolBar @change="update"/>
       </template>
       <Document :pages="tree.children"/>
     </EditorBackground>
-  `
+  `,
+  methods: {
+    update({type, data}) {
+      const page = tree.children[0];
+      page.children.push({
+        type: 'image',
+        attributes: {
+          file: data,
+          x: 300,
+          y: 300,
+          options: {
+            width: 300
+          }
+        }
+      });
+      this.$root.$emit('change');
+    }
+  }
 }
