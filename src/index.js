@@ -4,6 +4,13 @@ import { render, doc } from "./pdfKitRenderer.js";
 // import { mount } from "./mount.js";
 import App from "./components/app.js";
 
+const handlers = {
+  set: function(obj, prop, value) {
+    console.log(`Setting ${prop} to ${value} in `, obj)
+    return Reflect.set(obj, prop, value);
+  }
+};
+
 const documentJSON = {
   type: 'root',
   pageHeight: 791,
@@ -25,14 +32,14 @@ const documentJSON = {
         },
         {
           type: 'image',
-          attributes: {
+          attributes: new Proxy({
             url: '/img1.png',
             x: 0,
             y: 0,
             options: {
               width: 300
             }
-          }
+          }, handlers)
         },
         {
           type: 'rect',
@@ -78,8 +85,8 @@ const documentJSON = {
     }
   ]
 };
-const handlers = {};
-export const tree = new Proxy(documentJSON, handlers);
+
+export const tree = documentJSON;// new Proxy(documentJSON, handlers);
 
 function setup() {
   const iframe = document.querySelector('.render');
@@ -99,6 +106,10 @@ function mount(root, editorNode, pdfNode) {
     components: { App },
     template: `<App />`
   });
+
+  editor.$on('change', () => {
+    render(pdfdoc)
+  })
 }
 
 window.onload = () => setup();

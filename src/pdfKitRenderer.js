@@ -10,8 +10,11 @@ export function doc(root, domNode) {
 }
 
 export async function render(pdfdoc) {
-  const iframe = document.createElement("iframe");
-  pdfdoc.el.appendChild(iframe);
+  let iframe = pdfdoc.el.querySelector('iframe');
+  if (!iframe) {
+    iframe = document.createElement("iframe");
+    pdfdoc.el.appendChild(iframe);
+  }
 
   const doc = new PDFDocument();
   const stream = doc.pipe(blobStream());
