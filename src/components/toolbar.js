@@ -11,6 +11,10 @@ export default {
         @click="uploadImage"
       >
       </span>
+      <span class="fa fa-hammer"
+        @click="build"
+      >
+      </span>
       <span class="fa fa-plus"></span>
     </div>`,
   methods: {
@@ -23,6 +27,9 @@ export default {
         console.log('Adding file: ', file);
         this.$emit('change', { type: 'image', data: file });
       }
+    },
+    build() {
+      this.$root.$emit('change');
     }
   }
 }
