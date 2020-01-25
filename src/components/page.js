@@ -68,8 +68,12 @@ export default {
         } else if (event.code === "Backspace") {
           const value = this.docnode.attributes.value;
           this.docnode.attributes.value = value.substr(0, value.length - 1);
-        } else {
-          this.docnode.attributes.value += event.key;
+        } else if (event.key !== "Shift") {
+          let char = event.key;
+          if (event.shiftKey) {
+            char = char.toUpperCase();
+          }
+          this.docnode.attributes.value += char;
         }
 
       }
@@ -92,7 +96,7 @@ export default {
             event.target.addEventListener('blur',
               () => {
                 event.target.removeEventListener('keydown', this.typer);
-                delete this.docnode.attributes.editing;
+                this.docnode.attributes.editing = false;
                 this.typer = null;
               }
             , {once: true})
