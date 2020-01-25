@@ -35,7 +35,7 @@ export default {
         const dy = this.up.y - this.down.y;
         this.content.attributes.x = this.start.x + dx;
         this.content.attributes.y = this.start.y + dy;
-        console.log(dx, dy);
+        // console.log(dx, dy);
       }
     }
   },

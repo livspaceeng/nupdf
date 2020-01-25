@@ -6,7 +6,7 @@ import App from "./components/app.js";
 
 const handlers = {
   set: function(obj, prop, value) {
-    console.log(`Setting ${prop} to ${value} in `, obj)
+    // console.log(`Setting ${prop} to ${value} in `, obj)
     return Reflect.set(obj, prop, value);
   }
 };

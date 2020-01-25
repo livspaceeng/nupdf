@@ -11,10 +11,21 @@ export function doc(root, domNode) {
 
 export async function render(pdfdoc) {
   let iframe = pdfdoc.el.querySelector('iframe');
+  let spinner = pdfdoc.el.querySelector('.spinner');
+
   if (!iframe) {
     iframe = document.createElement("iframe");
     pdfdoc.el.appendChild(iframe);
   }
+
+  if (!spinner) {
+    spinner = document.createElement("div");
+    spinner.classList.add("spinner");
+    spinner.innerHTML = `<div class="lds-grid"><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div><div></div></div>`;
+    pdfdoc.el.appendChild(spinner);
+  }
+
+  spinner.style.display = 'flex';
 
   const doc = new PDFDocument();
   const stream = doc.pipe(blobStream());
@@ -24,6 +35,10 @@ export async function render(pdfdoc) {
 
     const url = stream.toBlobURL('application/pdf');
     iframe.src = url;
+    iframe.onload = () => {
+      spinner.style.display = 'none';
+    }
+  
   });
 
   await paint(pdfdoc.root, doc)
