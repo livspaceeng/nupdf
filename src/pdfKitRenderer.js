@@ -73,6 +73,8 @@ async function paintPage(page, doc) {
     switch (node.type) {
       case 'text': {
         const {value, x, y, options} = node.attributes;
+        doc.fontSize(node.attributes.fontSize);
+        doc.font(node.attributes.font);
         doc.text(value, x, y, options);
         // elementRenderPromise = Promise.resolve();
         break;

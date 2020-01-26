@@ -88,6 +88,17 @@ body {
   }
 }
 
+.textblock .text-controls {
+  position: absolute;
+  top: -33px;
+  background: #353535;
+  color: white;
+  padding: 5px;
+  border-radius: 4px;
+}
+
+
+
 .toolbar {
   height: 50px;
   background: #353535;

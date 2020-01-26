@@ -42,7 +42,9 @@ export default {
         const textElement = {
           type: 'text',
           attributes: {
-            value: 'Some text here some other text happens here and then some more',
+            value: 'Add text...',
+            fontSize: 12,
+            font: 'Helvetica',
             x: 300,
             y: 300,
             options: {

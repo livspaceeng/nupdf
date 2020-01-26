@@ -53,6 +53,12 @@ export default {
       this.startEvent = event.type;
       this.docnode = event.docnode;
       this.nodeStartAttributes = JSON.parse(JSON.stringify(event.docnode.attributes));
+
+      if (this.startEvent === 'textsave') {
+        event.el.removeEventListener('keydown', this.typer);
+        this.docnode.attributes.editing = false;
+        this.typer = null;
+      }
     },
     handleup(event) {
       this.mouseIsDown = false;
@@ -93,13 +99,6 @@ export default {
           this.docnode.attributes.editing = true;
           if (this.typer == null) {
             event.target.addEventListener('keydown', this.createTyper());
-            event.target.addEventListener('blur',
-              () => {
-                event.target.removeEventListener('keydown', this.typer);
-                this.docnode.attributes.editing = false;
-                this.typer = null;
-              }
-            , {once: true})
           }
         } else if (this.startEvent === 'imageresize-right') {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dx;

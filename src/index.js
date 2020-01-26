@@ -23,8 +23,11 @@ const documentJSON = {
           type: 'text',
           attributes: {
             value: 'Here is some text with a line break and a tab',
+            fontSize: 12,
+            font: 'Helvetica',
             x: 0,
             y: 0,
+            editing: false,
             options: {
               width: 300
             }
@@ -59,8 +62,11 @@ const documentJSON = {
           type: 'text',
           attributes: {
             value: 'Here we go again!',
+            fontSize: 12,
+            font: 'Helvetica',
             x: 100,
             y: 100,
+            editing: false,
             options: {
               width: 300
             }
@@ -70,8 +76,11 @@ const documentJSON = {
           type: 'text',
           attributes: {
             value: 'o',
+            fontSize: 12,
+            font: 'Helvetica',
             x: 605,
             y: 782,
+            editing: false,
             options: {
               width: 100
             }
@@ -99,7 +108,7 @@ function mount(root, editorNode, pdfNode) {
 
   const pdfdoc = doc(root, pdfNode);
 
-  setTimeout(() => render(pdfdoc));
+  // render(pdfdoc)
 
   const editor = new Vue({
     el: editorNode,

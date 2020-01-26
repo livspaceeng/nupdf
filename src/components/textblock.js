@@ -1,4 +1,9 @@
+import TextControls from './textcontrols.js';
+
 export default {
+  components: {
+    TextControls
+  },
   template: `
     <div
       class="textblock hoverborder"
@@ -9,9 +14,12 @@ export default {
         position: 'absolute',
         left: content.attributes.x,
         top: content.attributes.y,
-        width: content.attributes.options.width
+        width: content.attributes.options.width,
+        'font-size': content.attributes.fontSize,
+        'font-family': content.attributes.font
       }"
       tabindex="0"
+      ref="textarea"
     >
       {{ content.attributes.value }}
       <span v-if="content.attributes.editing"
@@ -28,6 +36,10 @@ export default {
         @mousedown="startRightResize"
       >
       </span>
+      <TextControls
+        v-if="content.attributes.editing"
+        :content="content"
+        @close="closeEditor"/>
     </div>
   `,
   props: {
@@ -42,7 +54,8 @@ export default {
         type: 'texttap',
         x: event.x,
         y: event.y,
-        docnode: this.content
+        docnode: this.content,
+        el: this.$refs.textarea
       });
     },
 
@@ -52,7 +65,8 @@ export default {
         type: 'imageresize-left',
         x: event.x,
         y: event.y,
-        docnode: this.content
+        docnode: this.content,
+        el: this.$refs.textarea
       });
     },
 
@@ -62,12 +76,23 @@ export default {
         type: 'imageresize-right',
         x: event.x,
         y: event.y,
-        docnode: this.content
+        docnode: this.content,
+        el: this.$refs.textarea
       });
     },
 
     setHovered(value) {
       this.hovered = value;
+    },
+
+    closeEditor() {
+      this.$emit('pointerdown', {
+        type: 'textsave',
+        x: event.x,
+        y: event.y,
+        docnode: this.content,
+        el: this.$refs.textarea
+      });
     }
   }
 }
