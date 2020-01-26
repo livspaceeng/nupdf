@@ -90,7 +90,8 @@ async function paintPage(page, doc) {
         } else {
           doc.font(node.attributes.font);
         }
-        doc.text(value, x, y, options);
+        doc.fillColor('black')
+          .text(value, x, y, options);
         // elementRenderPromise = Promise.resolve();
         break;
       }

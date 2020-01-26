@@ -26,11 +26,6 @@ export default {
         class="cursor"
       >
       </span>
-      <span class="handle handle-left"
-        v-if="hovered"
-        @mousedown="startLeftResize"
-      >
-      </span>
       <span class="handle handle-right"
         v-if="hovered"
         @mousedown="startRightResize"
@@ -61,17 +56,6 @@ export default {
     mousedown(event) {
       this.$emit('pointerdown', {
         type: 'texttap',
-        x: event.x,
-        y: event.y,
-        docnode: this.content,
-        el: this.$refs.textarea
-      });
-    },
-
-    startLeftResize(event) {
-      event.stopPropagation();
-      this.$emit('pointerdown', {
-        type: 'imageresize-left',
         x: event.x,
         y: event.y,
         docnode: this.content,
