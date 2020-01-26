@@ -4,6 +4,8 @@ export default {
       <select @change="updateFont">
         <option value="Helvetica">Helvetica</option>
         <option value="Courier">Courier</option>
+        <option value="/Gilroy-ExtraBold.otf">GilroyExtraBold</option>
+        <option value="/Gilroy-Light.otf">GilroyLight</option>
       </select>
       <input type="number" :value="content.attributes.fontSize"
         @change="updateFontSize">

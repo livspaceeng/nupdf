@@ -16,7 +16,7 @@ export default {
         top: content.attributes.y,
         width: content.attributes.options.width,
         'font-size': content.attributes.fontSize,
-        'font-family': content.attributes.font
+        'font-family': fontfamily
       }"
       tabindex="0"
       ref="textarea"
@@ -48,6 +48,15 @@ export default {
   data: () => ({
     hovered: false
   }),
+  computed: {
+    fontfamily() {
+      if (this.content.attributes.font.startsWith('/')) {
+        return this.content.attributes.font.substr(1, this.content.attributes.font.length - 5);
+      } else {
+        return this.content.attributes.font;
+      }
+    }
+  },
   methods: {
     mousedown(event) {
       this.$emit('pointerdown', {

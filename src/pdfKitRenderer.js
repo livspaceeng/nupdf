@@ -54,6 +54,14 @@ function blobToDataURL(blob) {
   })
 }
 
+function blobToArrayBuffer(blob) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
+    reader.onload = function(ev) { resolve(ev.target.result) }
+    reader.readAsArrayBuffer(blob);
+  })
+}
+
 async function paint(root, doc) {
   let pagesPainted = 0;
 
@@ -74,19 +82,20 @@ async function paintPage(page, doc) {
       case 'text': {
         const {value, x, y, options} = node.attributes;
         doc.fontSize(node.attributes.fontSize);
-        doc.font(node.attributes.font);
+        if (node.attributes.font.startsWith('/')) {
+          const response = await fetch(node.attributes.font);
+          const blob = await response.blob();
+          const arrayBuffer = await blobToArrayBuffer(blob);
+          doc.font(arrayBuffer);
+        } else {
+          doc.font(node.attributes.font);
+        }
         doc.text(value, x, y, options);
         // elementRenderPromise = Promise.resolve();
         break;
       }
       case 'image': {
         const {url, file, x, y, options} = node.attributes;
-        // elementRenderPromise = fetch(url)
-        // .then(response => response.blob())
-        // .then(blob => blobToDataURL(blob))
-        // .then(dataUrl => {
-        //   doc.image(dataUrl, x, y, options)
-        // });
         doc.save();
         doc.rotate(options.rotation, {origin: [x + options.width * 0.5, y + options.width * 0.5]});
 
