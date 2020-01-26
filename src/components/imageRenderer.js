@@ -1,6 +1,11 @@
+import ImageControls from "./imageControls.js";
+
 export default {
+  components: {
+    ImageControls
+  },
   template: `
-    <span class="hoverborder"
+    <span class="hoverborder image"
       :style="{
         position: 'absolute',
         left: content.attributes.x,
@@ -12,7 +17,8 @@ export default {
       <img @mousedown="mousedown"
         draggable="false"
         :style="{
-          width: content.attributes.options.width
+          width: content.attributes.options.width,
+          transform: 'rotateZ(' + content.attributes.options.rotation + 'Deg)'
         }"
         :src="imageurl"
       >
@@ -38,6 +44,10 @@ export default {
         @mousedown="startRightResize"
       >
       </span>
+      <ImageControls
+        v-if="content.attributes.editing"
+        :content="content"
+        @close="closeEditor"/>
     </span>
   `,
   props: {
@@ -98,6 +108,16 @@ export default {
         x: event.x,
         y: event.y,
         docnode: this.content
+      });
+    },
+
+    closeEditor() {
+      this.$emit('pointerdown', {
+        type: 'imagesave',
+        x: event.x,
+        y: event.y,
+        docnode: this.content,
+        el: null
       });
     },
 

@@ -31,6 +31,7 @@ export default {
             x: 300,
             y: 300,
             options: {
+              rotation: 0,
               width: 300
             }
           }

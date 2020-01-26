@@ -87,6 +87,7 @@ async function paintPage(page, doc) {
         // .then(dataUrl => {
         //   doc.image(dataUrl, x, y, options)
         // });
+        doc.rotate(options.rotation, { origin: [ x + options.width * 0.5, y + options.width * 0.5] });
         if (url) {
           const response = await fetch(url);
           const blob = await response.blob();
@@ -98,6 +99,7 @@ async function paintPage(page, doc) {
         } else {
           throw new Error('Unknown image node');
         }
+        doc.rotate(-options.rotation);
         break;
       }
       case 'rect': {

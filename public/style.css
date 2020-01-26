@@ -89,6 +89,7 @@ body {
 }
 
 .rect .rect-controls,
+.image .image-controls,
 .textblock .text-controls {
   position: absolute;
   top: -33px;
@@ -100,6 +101,7 @@ body {
   align-items: center;
 }
 
+.image .image-controls > *,
 .rect .rect-controls > *,
 .textblock .text-controls > * {
   margin: 0px 5px;

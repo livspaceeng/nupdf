@@ -59,7 +59,7 @@ export default {
         event.el.removeEventListener('keydown', this.typer);
         this.docnode.attributes.editing = false;
         this.typer = null;
-      } else if (this.startEvent === 'rectsave') {
+      } else if (this.startEvent === 'rectsave' || this.startEvent === 'imagesave') {
         this.docnode.attributes.editing = false;
       }
     },
@@ -96,6 +96,7 @@ export default {
         if (this.startEvent === 'imagetap') {
           this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
           this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
+          this.docnode.attributes.editing = true;
         } else if (this.startEvent === 'recttap') {
           this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
           this.docnode.attributes.y = this.nodeStartAttributes.y + dy;

@@ -40,6 +40,7 @@ const documentJSON = {
             x: 0,
             y: 0,
             options: {
+              rotation: 20,
               width: 300
             }
           }, handlers)
