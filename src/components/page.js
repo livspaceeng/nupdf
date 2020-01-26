@@ -54,8 +54,13 @@ export default {
       this.startEvent = event.type;
       this.docnode = event.docnode;
       this.nodeStartAttributes = JSON.parse(JSON.stringify(event.docnode.attributes));
-
-      if (this.startEvent === 'textsave') {
+      if (this.startEvent === 'texttap') {
+        this.docnode.attributes.editing = true;
+        if (this.typer == null) {
+          event.el.addEventListener('keydown', this.createTyper());
+        }
+      }
+      else if (this.startEvent === 'textsave') {
         event.el.removeEventListener('keydown', this.typer);
         this.docnode.attributes.editing = false;
         this.typer = null;
@@ -104,10 +109,6 @@ export default {
         } else if (this.startEvent === 'texttap') {
           this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
           this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
-          this.docnode.attributes.editing = true;
-          if (this.typer == null) {
-            event.target.addEventListener('keydown', this.createTyper());
-          }
         } else if (this.startEvent === 'imageresize-right') {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dx;
         } else if (this.startEvent === 'imageresize-left') {

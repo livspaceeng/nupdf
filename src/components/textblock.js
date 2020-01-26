@@ -21,7 +21,7 @@ export default {
       tabindex="0"
       ref="textarea"
     >
-      {{ content.attributes.value }}
+      <span v-html="textbody"></span>
       <span v-if="content.attributes.editing"
         class="cursor"
       >
@@ -50,6 +50,9 @@ export default {
       } else {
         return this.content.attributes.font;
       }
+    },
+    textbody() {
+      return this.content.attributes.value.replace(/\n/g, '<br/>');
     }
   },
   methods: {
