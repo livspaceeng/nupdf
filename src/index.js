@@ -50,7 +50,13 @@ const documentJSON = {
             x: 0,
             y: 0,
             width: 200,
-            height: 100
+            height: 100,
+            options: {
+              lineWidth: 1,
+              opacity: 0.5,
+              fill: "#000000",
+              border: "#000000"
+            }
           }
         }
       ]

@@ -55,6 +55,25 @@ export default {
         const newchildren = page.children.concat(textElement);
         this.$set(page, 'children', newchildren);
         this.$root.$emit('change');
+      } else if (type === 'rect') {
+        const rectElement = {
+          type: 'rect',
+          attributes: {
+            x: 300,
+            y: 300,
+            width: 200,
+            height: 100,
+            options: {
+              lineWidth: 1,
+              opacity: 0.5,
+              fill: "#000000",
+              border: "#000000"
+            }
+          }
+        };
+        const newchildren = page.children.concat(rectElement);
+        this.$set(page, 'children', newchildren);
+        this.$root.$emit('change');
       }
     }
   }

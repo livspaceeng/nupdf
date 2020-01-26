@@ -101,9 +101,12 @@ async function paintPage(page, doc) {
         break;
       }
       case 'rect': {
-        const {x, y, width, height} = node.attributes;
-        doc.rect(x, y, width, height);
-        doc.stroke();
+        const {x, y, width, height, options} = node.attributes;
+        doc.rect(x, y, width, height)
+          .lineWidth(options.lineWidth)
+          .fillOpacity(options.opacity)
+          .fillAndStroke(options.fill, options.border)
+          .stroke();
         // elementRenderPromise = Promise.resolve();
         break;
       }

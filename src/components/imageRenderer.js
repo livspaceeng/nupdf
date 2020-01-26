@@ -65,14 +65,6 @@ export default {
       });
     },
 
-    doRightResize(event) {
-      if (this.mouseisdown) {
-        this.righthandle.up = {x: event.x, y: event.y};
-        const dx = event.x - this.righthandle.down.x;
-        this.content.attributes.options.width = this.righthandle.start.x + dx;
-      }
-    },
-
     startTopResize(event) {
       this.$emit('pointerdown', {
         type: 'imageresize-top',

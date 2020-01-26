@@ -12,7 +12,7 @@ body {
 
 .handle-top {
   top: -5px;
-  left: 50%;
+  left: calc(50% - 5px);
   cursor: ns-resize;
 }
 
@@ -88,6 +88,7 @@ body {
   }
 }
 
+.rect .rect-controls,
 .textblock .text-controls {
   position: absolute;
   top: -33px;
@@ -95,9 +96,14 @@ body {
   color: white;
   padding: 5px;
   border-radius: 4px;
+  display: flex;
+  align-items: center;
 }
 
-
+.rect .rect-controls > *,
+.textblock .text-controls > * {
+  margin: 0px 5px;
+}
 
 .toolbar {
   height: 50px;
@@ -131,7 +137,7 @@ body {
   font-size: 13px;
 }
 
-.toolbar > span.text {
+.text {
   font-family: Helvetica;
 }
 

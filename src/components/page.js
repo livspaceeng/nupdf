@@ -24,6 +24,7 @@ export default {
         <Rectangle
           v-else-if="element.type === 'rect'"
           :content="element"
+          @pointerdown="handledown"
         />
       </span>
     </div>
@@ -58,6 +59,8 @@ export default {
         event.el.removeEventListener('keydown', this.typer);
         this.docnode.attributes.editing = false;
         this.typer = null;
+      } else if (this.startEvent === 'rectsave') {
+        this.docnode.attributes.editing = false;
       }
     },
     handleup(event) {
@@ -93,6 +96,10 @@ export default {
         if (this.startEvent === 'imagetap') {
           this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
           this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
+        } else if (this.startEvent === 'recttap') {
+          this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
+          this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
+          this.docnode.attributes.editing = true;
         } else if (this.startEvent === 'texttap') {
           this.docnode.attributes.x = this.nodeStartAttributes.x + dx;
           this.docnode.attributes.y = this.nodeStartAttributes.y + dy;
@@ -108,6 +115,14 @@ export default {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width - dy;
         } else if (this.startEvent === 'imageresize-bottom') {
           this.docnode.attributes.options.width = this.nodeStartAttributes.options.width + dy;
+        } else if (this.startEvent === 'rectresize-right') {
+          this.docnode.attributes.width = this.nodeStartAttributes.width + dx;
+        } else if (this.startEvent === 'rectresize-left') {
+          this.docnode.attributes.width = this.nodeStartAttributes.width - dx;
+        } else if (this.startEvent === 'rectresize-top') {
+          this.docnode.attributes.height = this.nodeStartAttributes.height - dy;
+        } else if (this.startEvent === 'rectresize-bottom') {
+          this.docnode.attributes.height = this.nodeStartAttributes.height + dy;
         }
       }
     }

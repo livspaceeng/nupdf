@@ -19,6 +19,10 @@ export default {
         @click="addText"
       >
       </span>
+      <span class="fa fa-shapes"
+        @click="addRect"
+      >
+      </span>
       <span class="fa fa-plus"></span>
     </div>`,
   methods: {
@@ -34,6 +38,9 @@ export default {
     },
     addText() {
       this.$emit('change', { type: 'text' });
+    },
+    addRect() {
+      this.$emit('change', { type: 'rect' })
     },
     build() {
       this.$root.$emit('change');
