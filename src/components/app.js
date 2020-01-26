@@ -75,6 +75,10 @@ export default {
         const newchildren = page.children.concat(rectElement);
         this.$set(page, 'children', newchildren);
         this.$root.$emit('change');
+      } else if (type === 'page') {
+        const newchildren = tree.children.concat({ type: 'page', children: [] });
+        this.$set(tree, 'children', newchildren);
+        this.$root.$emit('change');
       }
     }
   }

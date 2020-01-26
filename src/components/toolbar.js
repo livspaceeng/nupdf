@@ -23,7 +23,8 @@ export default {
         @click="addRect"
       >
       </span>
-      <span class="fa fa-plus"></span>
+      <span class="fa fa-plus"
+        @click="addPage"></span>
     </div>`,
   methods: {
     uploadImage() {
@@ -40,7 +41,10 @@ export default {
       this.$emit('change', { type: 'text' });
     },
     addRect() {
-      this.$emit('change', { type: 'rect' })
+      this.$emit('change', { type: 'rect' });
+    },
+    addPage() {
+      this.$emit('change', { type: 'page' });
     },
     build() {
       this.$root.$emit('change');
